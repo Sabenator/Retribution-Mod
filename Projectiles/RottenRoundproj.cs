@@ -10,13 +10,13 @@ using Terraria.ModLoader;
 
 namespace Retribution.Projectiles
 {
-	public class rottenroundproj : ModProjectile
+	public class RottenRoundproj : ModProjectile
 	{
 
 		public override void SetDefaults()
 		{
-			projectile.width = 38;
-			projectile.height = 38;
+			projectile.width = 56;
+			projectile.height = 56;
 			projectile.aiStyle = 0;
 			projectile.friendly = true;
 			projectile.tileCollide = true;

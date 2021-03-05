@@ -30,7 +30,7 @@ namespace Retribution.NPCs.Bosses.Tesca
 			projectile.tileCollide = false;
             projectile.alpha = 255;
 			projectile.penetrate = 1;
-            projectile.extraUpdates = 2;
+            projectile.timeLeft = 500;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

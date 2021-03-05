@@ -22,7 +22,7 @@ namespace Retribution.Items.Weapons.Ranger
 
 		public override void SetDefaults()
 		{
-			item.damage = 28;
+			item.damage = 25;
 			item.ranged = true;
 			item.width = 28;
 			item.height = 54;
@@ -36,76 +36,16 @@ namespace Retribution.Items.Weapons.Ranger
 			item.UseSound = SoundID.Item5;
 			item.autoReuse = true;
 			item.shoot = 10;
-			item.shootSpeed = 13f;
+			item.shootSpeed = 10f;
 			item.useAmmo = AmmoID.Arrow;
 		}
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override void HoldItem(Player player)
         {
-			Projectile.NewProjectile(player.Center.X, player.Center.Y, speedX, speedY, ModContent.ProjectileType<SandArrow>(), damage, knockBack, player.whoAmI, 0f, 0f);
-			return false;
+			RetributionPlayer.HorusEffect = true;
         }
     }
 
-	public class SandArrow : ModProjectile
-	{
-		public override void SetDefaults()
-		{
-			projectile.width = 14;
-			projectile.height = 32;
-			projectile.aiStyle = 1;
-			projectile.friendly = true;
-			projectile.hostile = false;
-			projectile.tileCollide = true;
-			projectile.penetrate = 1;
-		}
-
-		public override void Kill(int timeLeft)
-		{
-			Main.PlaySound(SoundID.Dig, (int)projectile.position.X, (int)projectile.position.Y);
-			Vector2 usePos = projectile.position;
-
-			Vector2 rotVector = (projectile.rotation - MathHelper.ToRadians(90f)).ToRotationVector2();
-			usePos += rotVector * 16f;
-
-			const int NUM_DUSTS = 20;
-
-			for (int i = 0; i < NUM_DUSTS; i++)
-			{
-				Dust dust;
-				dust = Main.dust[Terraria.Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Dirt, 0f, 0f, 0)];
-				dust.noGravity = true;
-			}
-		}
-
-        public override void AI()
-        {
-			projectile.rotation = projectile.velocity.ToRotation() + MathHelper.PiOver2;
-		}
-
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-		{
-			if (Main.rand.NextFloat() < .3f)
-			{
-				Projectile.NewProjectile(target.Center.X + 10, target.Center.Y - 10, 3, -3, ModContent.ProjectileType<HorusBolt>(), 0, 0f, Main.LocalPlayer.whoAmI, 0f, 0f);
-			}
-
-			if (Main.rand.NextFloat() < .3f)
-			{
-				Projectile.NewProjectile(target.Center.X - 10, target.Center.Y - 10, -3, -3, ModContent.ProjectileType<HorusBolt>(), 0, 0f, Main.LocalPlayer.whoAmI, 0f, 0f);
-			}
-
-			if (Main.rand.NextFloat() < .3f)
-			{
-				Projectile.NewProjectile(target.Center.X - 10, target.Center.Y + 10, -3, 3, ModContent.ProjectileType<HorusBolt>(), 0, 0f, Main.LocalPlayer.whoAmI, 0f, 0f);
-			}
-
-			if (Main.rand.NextFloat() < .3f)
-			{
-				Projectile.NewProjectile(target.Center.X + 10, target.Center.Y + 10, 3, 3, ModContent.ProjectileType<HorusBolt>(), 0, 0f, Main.LocalPlayer.whoAmI, 0f, 0f);
-			}
-		}
-	}
 	public class HorusBolt : ModProjectile
 	{
 		public override void SetDefaults()
@@ -134,7 +74,7 @@ namespace Retribution.Items.Weapons.Ranger
 			for (int i = 0; i < NUM_DUSTS; i++)
 			{
 				Dust dust;
-				dust = Main.dust[Terraria.Dust.NewDust(projectile.position, 1, 1, 57, 0f, 0f, 0, new Color(245, 191, 66))];
+				dust = Main.dust[Terraria.Dust.NewDust(projectile.position, 1, 1, 6, 0f, 0f, 0, default)];
 				dust.noGravity = true;
 			}
 		}
@@ -144,7 +84,7 @@ namespace Retribution.Items.Weapons.Ranger
 		public override void AI()
 		{
 			Dust dust;
-			dust = Terraria.Dust.NewDustPerfect(projectile.position, 57, new Vector2(0f, 0f), 0, new Color(255, 191, 66), 1f);
+			dust = Terraria.Dust.NewDustPerfect(projectile.position, 6, new Vector2(0f, 0f), 0, default, 1f);
 			dust.noGravity = true;
 
 			projectile.ai[0]++;
@@ -153,7 +93,7 @@ namespace Retribution.Items.Weapons.Ranger
 			{
 				canHome = true;
 				projectile.penetrate = 1;
-				projectile.damage = Main.rand.Next(10, 20);
+				projectile.damage = Main.rand.Next(20, 35);
 				projectile.ai[0] = 0;
 			}
 

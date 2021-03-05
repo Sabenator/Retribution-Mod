@@ -1,5 +1,5 @@
 using Retribution.Dusts;
-using Retribution.Buffs;
+using Retribution.Buffs.Summons;
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;

@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.ModLoader;
@@ -15,7 +16,9 @@ namespace Retribution.Projectiles.Minions
 		protected float inertia = 40f;
 		protected float shootCool = 90f;
 		protected float shootSpeed;
+		protected bool randomBehavior = false;
 		protected int shoot;
+		private static int offsetRandom;
 
 		public virtual void CreateDust()
 		{
@@ -25,33 +28,72 @@ namespace Retribution.Projectiles.Minions
 		{
 		}
 
-		public override void Behavior()
+        public override void Behavior()
 		{
 			Player player = Main.player[projectile.owner];
-			float spacing = (float)projectile.width * spacingMult;
-			for (int k = 0; k < 1000; k++)
+
+			if (randomBehavior == false)
 			{
-				Projectile otherProj = Main.projectile[k];
-				if (k != projectile.whoAmI && otherProj.active && otherProj.owner == projectile.owner && otherProj.type == projectile.type && Math.Abs(projectile.position.X - otherProj.position.X) + Math.Abs(projectile.position.Y - otherProj.position.Y) < spacing)
+				float spacing = (float)projectile.width * spacingMult;
+				for (int k = 0; k < 1000; k++)
 				{
-					if (projectile.position.X < Main.projectile[k].position.X)
+					Projectile otherProj = Main.projectile[k];
+					if (k != projectile.whoAmI && otherProj.active && otherProj.owner == projectile.owner && otherProj.type == projectile.type && Math.Abs(projectile.position.X - otherProj.position.X) + Math.Abs(projectile.position.Y - otherProj.position.Y) < spacing)
 					{
-						projectile.velocity.X -= idleAccel;
-					}
-					else
-					{
-						projectile.velocity.X += idleAccel;
-					}
-					if (projectile.position.Y < Main.projectile[k].position.Y)
-					{
-						projectile.velocity.Y -= idleAccel;
-					}
-					else
-					{
-						projectile.velocity.Y += idleAccel;
+						if (projectile.position.X < Main.projectile[k].position.X)
+						{
+							projectile.velocity.X -= idleAccel;
+						}
+						else
+						{
+							projectile.velocity.X += idleAccel;
+						}
+						if (projectile.position.Y < Main.projectile[k].position.Y)
+						{
+							projectile.velocity.Y -= idleAccel;
+						}
+						else
+						{
+							projectile.velocity.Y += idleAccel;
+						}
 					}
 				}
 			}
+			else if (randomBehavior == true)
+			{
+				Vector2 idlePosition = player.Center;
+				idlePosition.Y -= 34f;
+
+				float minionPositionOffsetX = (10 + projectile.minionPos * 40) * -player.direction;
+
+				offsetRandom = Main.rand.Next(1, 50);
+
+				idlePosition.X += minionPositionOffsetX + offsetRandom;
+
+				Vector2 vectorToIdlePosition = idlePosition - projectile.Center;
+				float distanceToIdlePosition = vectorToIdlePosition.Length();
+				if (Main.myPlayer == player.whoAmI && distanceToIdlePosition > 2000f)
+				{
+					projectile.position = idlePosition;
+					projectile.velocity *= 0.1f;
+					projectile.netUpdate = true;
+				}
+
+				float overlapVelocity = 0.04f;
+				for (int i = 0; i < Main.maxProjectiles; i++)
+				{
+					Projectile other = Main.projectile[i];
+					if (i != projectile.whoAmI && other.active && other.owner == projectile.owner && Math.Abs(projectile.position.X - other.position.X) + Math.Abs(projectile.position.Y - other.position.Y) < projectile.width)
+					{
+						if (projectile.position.X < other.position.X) projectile.velocity.X -= overlapVelocity;
+						else projectile.velocity.X += overlapVelocity;
+
+						if (projectile.position.Y < other.position.Y) projectile.velocity.Y -= overlapVelocity;
+						else projectile.velocity.Y += overlapVelocity;
+					}
+				}
+			}
+			
 			Vector2 targetPos = projectile.position;
 			float targetDist = viewDist;
 			bool target = false;

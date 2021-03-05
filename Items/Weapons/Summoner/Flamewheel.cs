@@ -10,7 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Retribution.Projectiles.Minions;
-using Retribution.Buffs;
+using Retribution.Buffs.Summons;
 
 namespace Retribution.Items.Weapons.Summoner
 {
@@ -33,7 +33,7 @@ namespace Retribution.Items.Weapons.Summoner
 			item.height = 66;
 			item.useTime = 36;
 			item.useAnimation = 36;
-			item.useStyle = ItemUseStyleID.SwingThrow;
+			item.useStyle = 1;
 			item.value = Item.buyPrice(0, 30, 0, 0);
 			item.rare = ItemRarityID.Cyan;
 			item.UseSound = SoundID.Item44;

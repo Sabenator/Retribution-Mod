@@ -12,6 +12,7 @@ using Retribution.Tiles;
 using Retribution.Items.Consumables;
 using Retribution.Items;
 using Retribution.Projectiles;
+using Retribution.Items.Weapons.Ranger;
 using IL.Terraria.Utilities;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;

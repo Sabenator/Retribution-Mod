@@ -7,6 +7,7 @@ using Terraria.DataStructures;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Retribution.Projectiles;
+using Retribution.Items.Weapons.Ranger;
 
 namespace Retribution.Items
 {

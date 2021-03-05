@@ -24,8 +24,7 @@ namespace Retribution.Effects
 				return;
 			}
 			Player player = Main.LocalPlayer;
-			//GetModPlayer<RetributionPlayer>().ZoneHematic
-			bool inHematic = Main.LocalPlayer.ZoneCrimson;
+			bool inHematic = player.GetModPlayer<RetributionPlayer>().ZoneHematic;
 			fogOffsetX++;
 			if (fogOffsetX >= texture.Width)
 			{
@@ -33,15 +32,15 @@ namespace Retribution.Effects
 			}
 			if (inHematic)
 			{
-				fadeOpacity += 0.05f;
-				if (fadeOpacity > 1f)
+				fadeOpacity += 0.02f;
+				if (fadeOpacity > 0.4f)
 				{
-					fadeOpacity = 1f;
+					fadeOpacity = 0.4f;
 				}
 			}
 			else
 			{
-				fadeOpacity -= 0.05f;
+				fadeOpacity -= 0.5f;
 				if (fadeOpacity < 0f)
 				{
 					fadeOpacity = 0f;

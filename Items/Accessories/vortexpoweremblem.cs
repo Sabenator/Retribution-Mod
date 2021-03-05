@@ -14,7 +14,7 @@ namespace Retribution.Items.Accessories
 			DisplayName.SetDefault("Vortex Power Emblem");
 			Tooltip.SetDefault("25% increased ranged damage"
 				+ "\n75% decreased all non-ranged damage"
-				+ "\n25% chance to not consume ammo");
+				+ "\n25% Main.rand.NextFloat() < .15f to not consume ammo");
 		}
 
 		public override void SetDefaults()

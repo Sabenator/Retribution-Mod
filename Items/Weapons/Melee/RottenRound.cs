@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace Retribution.Items.Weapons.Melee
 {
-	public class rottenround : ModItem
+	public class RottenRound : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

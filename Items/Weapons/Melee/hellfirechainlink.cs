@@ -7,7 +7,12 @@ namespace Retribution.Items.Weapons.Melee
 {
 	public class hellfirechainlink : ModItem
 	{
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+        {
+			DisplayName.SetDefault("Hellfire Chainlink");
+        }
+
+        public override void SetDefaults()
 		{
 			item.width = 22;
 			item.height = 20;

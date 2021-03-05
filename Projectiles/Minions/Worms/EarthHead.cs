@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Retribution.Buffs;
+using Retribution.Buffs.Summons;
 
 namespace Retribution.Projectiles.Minions.Worms
 {

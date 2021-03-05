@@ -56,14 +56,13 @@ namespace Retribution.NPCs.Bosses.Morbus
             npc.noGravity = true;
             npc.noTileCollide = true;
             npc.HitSound = SoundID.NPCHit1;
-            npc.DeathSound = SoundID.DD2_BetsyScream;
             npc.buffImmune[BuffID.Poisoned] = true;
             npc.buffImmune[BuffID.Venom] = true;
             npc.buffImmune[BuffID.Confused] = true;
             npc.buffImmune[BuffID.CursedInferno] = true;
             npc.buffImmune[BuffID.Ichor] = true;
 
-            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/cursedprotector");
+            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/morbus");
         }
 
         private double counting;
@@ -95,7 +94,7 @@ namespace Retribution.NPCs.Bosses.Morbus
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             npc.lifeMax = (int)(npc.lifeMax * 0.625f * bossLifeScale);
-            npc.damage = (int)(npc.damage * 0.6f);
+            npc.damage = (int)(npc.damage * 1.6f);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -103,13 +102,26 @@ namespace Retribution.NPCs.Bosses.Morbus
             if (enraged == true)
             {
                 Vector2 vector = new Vector2(0f, 0f);
-                SpriteEffects effects = (base.npc.spriteDirection < 0) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-                for (int i = 0; i < base.npc.oldPos.Length; i++)
+                SpriteEffects effects = (npc.spriteDirection < 0) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+                for (int i = 0; i < npc.oldPos.Length; i++)
                 {
-                    Vector2 position = base.npc.oldPos[i] - Main.screenPosition + vector + new Vector2(0f, npc.gfxOffY);
-                    Color value = base.npc.GetAlpha(new Color(255, 255, 255, 10)) * ((float)(base.npc.oldPos.Length - i) / (float)base.npc.oldPos.Length);
-                    spriteBatch.Draw(Main.npcTexture[base.npc.type], position, new Rectangle?(base.npc.frame), value * 0.25f, base.npc.rotation, vector, base.npc.scale, effects, 0f);
+                    Vector2 position = npc.oldPos[i] - Main.screenPosition + vector + new Vector2(0f, npc.gfxOffY);
+                    Color value = npc.GetAlpha(new Color(255, 255, 255, 10)) * ((float)(npc.oldPos.Length - i) / (float)npc.oldPos.Length);
+                    spriteBatch.Draw(Main.npcTexture[npc.type], position, new Rectangle?(npc.frame), value * 0.25f, npc.rotation, vector, npc.scale, effects, 0f);
                 }
+
+                SpriteEffects spriteEffects = SpriteEffects.None;
+
+                Texture2D glow = ModContent.GetTexture("Retribution/NPCs/Bosses/Glowmasks/Morbus");
+
+                Vector2 vector11 = new Vector2((float)(Main.npcTexture[npc.type].Width / 2), (float)(Main.npcTexture[npc.type].Height / Main.npcFrameCount[npc.type] / 2));
+                Vector2 vector12 = npc.Center - Main.screenPosition;
+                vector12 -= new Vector2((float)Main.npcTexture[npc.type].Width, (float)(Main.npcTexture[npc.type].Height / Main.npcFrameCount[npc.type])) * npc.scale / 2f;
+                vector12 += vector11 * npc.scale + new Vector2(0f, 4f + npc.gfxOffY);
+                Color color37 = Color.Lerp(Color.White, Color.Cyan, 0.5f);
+
+                spriteBatch.Draw(Main.npcTexture[npc.type], vector12, new Rectangle?(npc.frame), npc.GetAlpha(lightColor), npc.rotation, vector11, npc.scale, spriteEffects, 0f);
+                spriteBatch.Draw(glow, vector12, new Rectangle?(npc.frame), color37, npc.rotation, vector11, npc.scale, spriteEffects, 0f);
             }
             return true;
         }
@@ -170,7 +182,8 @@ namespace Retribution.NPCs.Bosses.Morbus
 
                 if (enraged == true && soundAmount == 0 && Main.netMode != 1)
                 {
-                    Main.PlaySound(SoundID.DD2_BetsyScream, (int)npc.position.X, (int)npc.position.Y);
+                    Main.PlaySound(SoundLoader.customSoundType, -1, -1, mod.GetSoundSlot(SoundType.Custom, "Sounds/Custom/Morbus_Roar"));
+                    Main.PlaySound(SoundID.DD2_BetsyScream, npc.Center);
 
                     Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Morbus_Left"), 1f);
 
@@ -220,17 +233,17 @@ namespace Retribution.NPCs.Bosses.Morbus
                             npc.netUpdate = true;
                             npc.velocity.X += 0.05f;
                         }
-                        if (Main.player[base.npc.target].position.Y < base.npc.position.Y + 350f)
+                        if (Main.player[npc.target].position.Y < npc.position.Y + 350f)
                         {
                             npc.netUpdate = true;
-                            NPC npc2 = base.npc;
-                            npc2.velocity.Y = npc2.velocity.Y - ((base.npc.velocity.Y > 0f) ? 0.45f : 0.05f);
+                            NPC npc2 = npc;
+                            npc2.velocity.Y = npc2.velocity.Y - ((npc.velocity.Y > 0f) ? 0.45f : 0.05f);
                         }
-                        if (Main.player[base.npc.target].position.Y > base.npc.position.Y + 250f)
+                        if (Main.player[npc.target].position.Y > npc.position.Y + 250f)
                         {
                             npc.netUpdate = true;
-                            NPC npc3 = base.npc;
-                            npc3.velocity.Y = npc3.velocity.Y + ((base.npc.velocity.Y < 0f) ? 0.45f : 0.05f);
+                            NPC npc3 = npc;
+                            npc3.velocity.Y = npc3.velocity.Y + ((npc.velocity.Y < 0f) ? 0.45f : 0.05f);
                         }
 
                         npc.position += npc.velocity;
@@ -247,17 +260,17 @@ namespace Retribution.NPCs.Bosses.Morbus
                             npc.netUpdate = true;
                             npc.velocity.X += 0.2f;
                         }
-                        if (Main.player[base.npc.target].position.Y < base.npc.position.Y + 250f && Main.netMode != 1)
+                        if (Main.player[npc.target].position.Y < npc.position.Y + 250f && Main.netMode != 1)
                         {
                             npc.netUpdate = true;
-                            NPC npc2 = base.npc;
-                            npc2.velocity.Y = npc2.velocity.Y - ((base.npc.velocity.Y > 0f) ? 0.75f : 0.06f);
+                            NPC npc2 = npc;
+                            npc2.velocity.Y = npc2.velocity.Y - ((npc.velocity.Y > 0f) ? 0.75f : 0.06f);
                         }
-                        if (Main.player[base.npc.target].position.Y > base.npc.position.Y + 250f && Main.netMode != 1)
+                        if (Main.player[npc.target].position.Y > npc.position.Y + 250f && Main.netMode != 1)
                         {
                             npc.netUpdate = true;
-                            NPC npc3 = base.npc;
-                            npc3.velocity.Y = npc3.velocity.Y + ((base.npc.velocity.Y < 0f) ? 0.75f : 0.06f);
+                            NPC npc3 = npc;
+                            npc3.velocity.Y = npc3.velocity.Y + ((npc.velocity.Y < 0f) ? 0.75f : 0.06f);
                         }
 
                         npc.position += npc.velocity;
@@ -681,6 +694,9 @@ namespace Retribution.NPCs.Bosses.Morbus
 
         public override void NPCLoot()
         {
+            Main.PlaySound(SoundLoader.customSoundType, -1, -1, mod.GetSoundSlot(SoundType.Custom, "Sounds/Custom/Morbus_Roar"));
+            Main.PlaySound(SoundID.DD2_BetsyScream, npc.Center);
+
             if (RetributionWorld.downedMorbus == false)
             {
                 Main.NewText("The Corruption's pneuma has been released from it's shackles...", 108, 92, 145, true);

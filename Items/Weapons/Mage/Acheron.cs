@@ -18,7 +18,7 @@ namespace Retribution.Items.Weapons.Mage
 		{
 			item.width = 36;
 			item.height = 36;
-			item.useStyle = ItemUseStyleID.HoldingOut;
+			item.useStyle = ItemUseStyleID.HoldingUp;
 			item.useTime = 35;
 			item.useAnimation = 35;
 			item.damage = 45;

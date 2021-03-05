@@ -18,7 +18,7 @@ namespace Retribution.NPCs.Bosses.Locus
 
         public override void SetDefaults()
         {
-            npc.aiStyle = 2;
+            npc.aiStyle = 14;
             npc.lifeMax = 50;
             npc.damage = 25;
             npc.defense = 16;

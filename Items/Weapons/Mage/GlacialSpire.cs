@@ -34,8 +34,8 @@ namespace Retribution.Items.Weapons.Mage
 			item.magic = true;
 			item.mana = 11;
 			item.rare = ItemRarityID.White;
-			item.width = 44;
-			item.height = 44;
+			item.width = 28;
+			item.height = 30;
 			item.useTime = 30;
 			item.UseSound = SoundID.Item34;
 			item.useStyle = ItemUseStyleID.HoldingOut;

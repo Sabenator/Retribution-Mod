@@ -9,8 +9,7 @@ using Terraria.GameContent.Events;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Retribution.Projectiles.Minions;
-using Retribution.Buffs;
+using Retribution.Buffs.Summons;
 
 namespace Retribution.Items.Weapons.Summoner
 {

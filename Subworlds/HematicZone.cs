@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Retribution;
+using Retribution.Tiles;
 using System.Collections.Generic;
 using Terraria.World.Generation;
 
@@ -13,7 +14,7 @@ public class HematicZone : Subworld
 
 	public override ModWorld modWorld => ModContent.GetInstance <RetributionWorld>();
 
-	public override bool saveSubworld => false;
+	public override bool saveSubworld => true;
 	public override bool disablePlayerSaving => true;
 	public override bool saveModData => true;
 
@@ -30,7 +31,7 @@ public class HematicZone : Subworld
 				{
 					crimstone.Set((j + i * Main.maxTilesY) / (float)(Main.maxTilesX * Main.maxTilesY));
 					Main.tile[i, j].active(true);
-					Main.tile[i, j].type = TileID.Crimstone;
+					Main.tile[i, j].type = (ushort)ModContent.TileType<Hemasoil>();
 
 					/*int choice = Main.rand.Next(2); //For a random tile choice
 					if (choice == 0)
@@ -53,7 +54,7 @@ public class HematicZone : Subworld
 			{
 				for (int j = 0; j < Main.maxTilesY; j++)
 				{
-					WorldGen.PlaceWall(i, j, WallID.CrimsonUnsafe1);
+					WorldGen.PlaceWall(i, j, WallID.CrimsonUnsafe2);
 				}
 			}
 		}),
@@ -105,7 +106,7 @@ public class HematicZone : Subworld
 			{
 				float num = (float) index / ((float) (Main.maxTilesX * Main.maxTilesY) * 0.00013f);
 				smallislands.Set(num);
-				int type = TileID.Crimstone;
+				int type = (ushort)ModContent.TileType<Hemasoil>();
 				WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next(0, Main.maxTilesY), (double) WorldGen.genRand.Next(8, 25), WorldGen.genRand.Next(4, 18), type, true, 0.0f, 0.0f, false, true);
 			}
 		}),
@@ -131,7 +132,7 @@ public class HematicZone : Subworld
 				int i = WorldGen.genRand.Next(0, Main.maxTilesX);
 				int j = WorldGen.genRand.Next(0, Main.maxTilesY);
 
-				WorldGen.TileRunner(i, j, WorldGen.genRand.Next(5, 10), WorldGen.genRand.Next(10, 30), TileID.Crimtane);
+				WorldGen.TileRunner(i, j, WorldGen.genRand.Next(5, 10), WorldGen.genRand.Next(10, 30), ModContent.TileType<Hematite>());
 			}
 		})
 	};

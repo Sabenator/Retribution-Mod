@@ -14,7 +14,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ModLoader.IO;
+using Retribution.Projectiles;
 using Retribution.NPCs.Bosses.Vanilla;
+using Retribution.Tiles;
 
 namespace Retribution
 {
@@ -22,7 +24,12 @@ namespace Retribution
 	{
 		public override bool InstancePerEntity => true;
 
+		public static int turkeyBoss = -1;
+
 		public bool tFrost;
+
+		public static bool hematicEnemy;
+		public static bool cysticEnemy;
 
         public override void HitEffect(NPC npc, int hitDirection, double damage)
 		{
@@ -97,8 +104,38 @@ namespace Retribution
 			#endregion
 		}
 
+		int soulTimer;
+
         public override void NPCLoot(NPC npc)
 		{
+			if (RetributionWorld.downedTesca == true && RetributionWorld.spawnedTanzanite == false)
+			{
+				Main.NewText("Your world has been blessed with Tanzanite", 50, 130, 200);
+
+
+				for (int k = 0; k < (int)((Main.maxTilesX * Main.maxTilesY) * 5E-05); k++)
+				{
+					int x = WorldGen.genRand.Next(0, Main.maxTilesX);
+					int y = (int)Main.rockLayer;
+
+					Tile tile = Framing.GetTileSafely(x, y);
+
+					if (tile.active() && tile.type == ModContent.TileType<IceCrystalTile>())
+					{
+						WorldGen.OreRunner(x, y, WorldGen.genRand.Next(1, 20), WorldGen.genRand.Next(20, 60), (ushort)ModContent.TileType<tanzanite>());
+					}
+				}
+				RetributionWorld.spawnedTanzanite = true;
+			}
+
+			if ((Main.LocalPlayer.HeldItem.modItem is ReaperClass && !npc.boss == true))
+			{
+				if (Main.rand.NextFloat() < RetributionPlayer.soulPercent)
+				{
+					Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, -2.5f, ModContent.ProjectileType<badsoul>(), npc.lifeMax / 5 * 2, 0f, Main.myPlayer);
+				}
+			}
+
 
 			if (npc.type == NPCID.EyeofCthulhu && !Main.expertMode)
 			{

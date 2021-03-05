@@ -33,10 +33,10 @@ namespace Retribution.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return spawnInfo.player.GetModPlayer<RetributionPlayer>().ZoneSwamp ? .4f : 0f;
+			return spawnInfo.player.GetModPlayer<RetributionPlayer>().ZoneCystic ? .4f : 0f;
 		}
 
-		public void NPCLoot()
+		public override void NPCLoot()
 		{
 			for (int d = 0; d < 20; d++)
 			{

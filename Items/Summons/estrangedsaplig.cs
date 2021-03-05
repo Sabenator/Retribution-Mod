@@ -21,8 +21,8 @@ namespace Retribution.Items.Summons
 
 		public override void SetDefaults()
 		{
-			item.width = 48;
-			item.height = 50;
+			item.width = 56;
+			item.height = 56;
 			item.maxStack = 20;
 			item.useAnimation = 45;
 			item.useTime = 45;

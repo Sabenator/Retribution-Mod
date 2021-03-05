@@ -58,7 +58,7 @@ namespace Retribution.NPCs.Bosses.Tesca
 
             if (spikeTimer >= 35)
             {
-                Projectile.NewProjectile(projectile.position.X, projectile.Center.Y - 60, 0, -2, ModContent.ProjectileType<tescanminispike>(), 10, 0f, Main.myPlayer, projectile.whoAmI, 40);
+                Projectile.NewProjectile(projectile.position.X, projectile.Center.Y - 60, 0, -5, ModContent.ProjectileType<tescanminispike>(), 10, 0f, Main.myPlayer, projectile.whoAmI, 40);
                 spikeTimer = 0;
             }
         }

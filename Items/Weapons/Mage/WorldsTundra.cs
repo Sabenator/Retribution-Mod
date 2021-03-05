@@ -13,7 +13,7 @@ namespace Retribution.Items.Weapons.Mage
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("World's Tundra");
-            Tooltip.SetDefault("Shoots an ice ball. When the ice ball hits an enemy, it will explode into homing ice bolts.");
+            Tooltip.SetDefault("Shoots an ice ball.");
 			Item.staff[item.type] = true;
 		}
 

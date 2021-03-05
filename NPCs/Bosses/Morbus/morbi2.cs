@@ -92,7 +92,7 @@ namespace Retribution.NPCs.Bosses.Morbus
 			projectile.hostile = true;
 			projectile.ranged = true;
 			projectile.penetrate = 1;
-			projectile.alpha = 150;
+			projectile.alpha = 255;
 			projectile.timeLeft = 260;
 			projectile.light = 0.5f;
 			projectile.ignoreWater = true;

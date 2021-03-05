@@ -19,8 +19,8 @@ namespace Retribution.Items.Weapons.Summoner
             item.damage = 18;
             item.summon = true;
             item.mana = 8;
-            item.width = 42;
-            item.height = 42;
+            item.width = 50;
+            item.height = 50;
             item.useTime = 18;
             item.useAnimation = 18;
             item.useStyle = 1;

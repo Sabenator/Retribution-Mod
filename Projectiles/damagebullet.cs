@@ -27,9 +27,9 @@ namespace Retribution.Projectiles
 			projectile.friendly = true;
 			projectile.tileCollide = false;
 			projectile.penetrate = 1;
-            projectile.timeLeft = 120;
+            projectile.timeLeft = 150;
             projectile.alpha = 255;
-            projectile.extraUpdates = 2;
+            projectile.extraUpdates = 3;
 		}
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -42,7 +42,6 @@ namespace Retribution.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(SoundID.Dig, (int)projectile.position.X, (int)projectile.position.Y);
             Vector2 usePos = projectile.position;
 
             Vector2 rotVector = (projectile.rotation - MathHelper.ToRadians(90f)).ToRotationVector2();
@@ -53,7 +52,7 @@ namespace Retribution.Projectiles
             for (int i = 0; i < NUM_DUSTS; i++)
             {
                 Dust dust;
-                dust = Main.dust[Terraria.Dust.NewDust(projectile.position, projectile.width, projectile.height, 6, 0f, 0f, 0, new Color(255, 0, 201), 2f)];
+                dust = Terraria.Dust.NewDustPerfect(projectile.position, 170, new Vector2(0f, 0f), 100, new Color(255, 150, 0), 1f);
                 dust.noGravity = true;
             }
         }
@@ -62,7 +61,7 @@ namespace Retribution.Projectiles
         {
 			Dust dust;
 			Vector2 position = projectile.Center;
-			dust = Terraria.Dust.NewDustPerfect(position, 127, new Vector2(0f, 0f), 0, new Color(255, 255, 255), 2f);
+			dust = Terraria.Dust.NewDustPerfect(position, 6, new Vector2(0f, 0f), 0, new Color(255, 255, 255), 2f);
 			dust.noGravity = true;
 
 
@@ -75,7 +74,7 @@ namespace Retribution.Projectiles
             }
             float num134 = projectile.position.X;
             float num135 = projectile.position.Y;
-            float num136 = 300f;
+            float num136 = 50f;
             bool flag3 = false;
             int num137 = 0;
             if (projectile.ai[1] == 0f)

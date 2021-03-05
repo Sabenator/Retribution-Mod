@@ -63,7 +63,8 @@ namespace Retribution.Items.Weapons.Reaper
 				soulCost = 1;
 				
 			}
-			else {
+			else 
+			{
 				item.useStyle = ItemUseStyleID.SwingThrow;
 				item.useTime = 20;
 				item.useAnimation = 20;

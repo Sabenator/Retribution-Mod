@@ -8,7 +8,7 @@ namespace Retribution.Items.Placeable
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Corrupt Protector");
+			DisplayName.SetDefault("Morbus Music Box");
 		}
 
 		public override void SetDefaults()

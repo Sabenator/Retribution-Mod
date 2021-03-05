@@ -7,7 +7,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Retribution.Buffs;
-using Retribution.Items.Weapons.Ranger;
+using Retribution.Items.Bags;
 
 namespace Retribution.NPCs.Bosses.Silva
 {
@@ -16,8 +16,8 @@ namespace Retribution.NPCs.Bosses.Silva
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Silva");
-            Main.npcFrameCount[npc.type] = 4;
+            DisplayName.SetDefault("Elder Oak");
+            Main.npcFrameCount[npc.type] = 1;
         }
 
         public override void SetDefaults()
@@ -57,6 +57,8 @@ namespace Retribution.NPCs.Bosses.Silva
             npc.buffImmune[BuffID.Confused] = true;
             npc.behindTiles = true;
             music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/silva");
+            bossBag = ModContent.ItemType<Silva_Bag>();
+
         }
 
         private double counting;
@@ -93,6 +95,7 @@ namespace Retribution.NPCs.Bosses.Silva
 
         public override void AI()
         {
+
             if (doneSpawning == false)
             {
                 if (spawnAmount == 1)
@@ -313,10 +316,12 @@ namespace Retribution.NPCs.Bosses.Silva
                 }
 
                 #endregion
+
+                player.GetModPlayer<TreeLock>().screenLock = npc.whoAmI;
             }
         }
 
-        public override void FindFrame(int frameHeight)
+        /*public override void FindFrame(int frameHeight)
         {
             #region Idle Frames
             if (this.frame == frameIdle)
@@ -397,7 +402,7 @@ namespace Retribution.NPCs.Bosses.Silva
                 }
             }
             #endregion
-        }
+        }*/
 
         public override void NPCLoot()
         {
@@ -406,12 +411,40 @@ namespace Retribution.NPCs.Bosses.Silva
             Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Tesca1"), 1f);
             Gore.NewGore(npc.position, -npc.velocity, mod.GetGoreSlot("Gores/Tesca0"), 1f);
 
-            if (Main.rand.NextFloat() < .20f)
+
+            if (Main.expertMode)
             {
-                //Item.NewItem(npc.getRect(), ModContent.ItemType<SnowingFrost>(), 1);
+                npc.DropBossBags();
             }
 
-            //RetributionWorld.downedTesca = true;
+            RetributionWorld.downedSilva = true;
+            if (Main.netMode == NetmodeID.Server)
+            {
+                NetMessage.SendData(MessageID.WorldData);
+            }
+        }
+    }
+
+    public class TreeLock : ModPlayer
+    {
+        public int screenLock = -1;
+
+        public override void ResetEffects()
+        {
+            screenLock = -1;
+        }
+
+        public override void ModifyScreenPosition()
+        {
+            if (screenLock != -1 && player.active && player.statLife > 0)
+            {
+                NPC Tree = Main.npc[screenLock];
+                if (Tree.active)
+                {
+                    Main.screenPosition.X = Tree.position.X - Main.screenWidth / 1.2f;
+                    Main.screenPosition.Y = Tree.position.Y - Main.screenHeight;
+                }
+            }
         }
     }
 }

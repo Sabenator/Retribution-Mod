@@ -10,7 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Retribution.Projectiles.Minions;
-using Retribution.Buffs;
+using Retribution.Buffs.Summons;
 
 namespace Retribution.Items.Weapons.Summoner
 {
@@ -20,7 +20,7 @@ namespace Retribution.Items.Weapons.Summoner
 		{
 			DisplayName.SetDefault("Flameling Staff");
 			Tooltip.SetDefault("Summons a flaming ring to fight for you");
-			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true; // This lets the player target anywhere on the whole screen while using a controller.
+			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true; 
 			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
 		}
 
@@ -33,16 +33,14 @@ namespace Retribution.Items.Weapons.Summoner
 			item.height = 28;
 			item.useTime = 36;
 			item.useAnimation = 36;
-			item.useStyle = ItemUseStyleID.SwingThrow;
+			item.useStyle = 1;
 			item.value = Item.buyPrice(0, 30, 0, 0);
 			item.rare = ItemRarityID.Cyan;
 			item.UseSound = SoundID.Item44;
 
-			// These below are needed for a minion weapon
 			item.noMelee = true;
 			item.summon = true;
 			item.buffType = ModContent.BuffType<flamelingbuff>();
-			// No buffTime because otherwise the item tooltip would say something like "1 minute duration"
 			item.shoot = ModContent.ProjectileType<flameling>();
 		}
 

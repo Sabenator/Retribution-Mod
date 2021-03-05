@@ -8,6 +8,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Retribution.Buffs;
 using Retribution.Items.Weapons.Ranger;
+using Retribution.Items.Bags;
 
 namespace Retribution.NPCs.Bosses.Tesca
 {
@@ -57,11 +58,11 @@ namespace Retribution.NPCs.Bosses.Tesca
             npc.noGravity = true;
             npc.noTileCollide = true;
             npc.HitSound = SoundID.NPCHit1;
-            npc.DeathSound = SoundID.DD2_BetsyScream;
             npc.buffImmune[BuffID.Frostburn] = true;
             npc.buffImmune[BuffID.Frozen] = true;
             npc.buffImmune[BuffID.Confused] = true;
             music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/tesca");
+            bossBag = ModContent.ItemType<Tesca_Bag>();
         }
 
         private double counting;
@@ -75,6 +76,7 @@ namespace Retribution.NPCs.Bosses.Tesca
         private bool enraged = false;
         private bool moving = true;
         private int soundAmount = 0;
+        private int attachAmount = 0;
 
         private bool stateIdle = true;
         private bool stateIceBolt = false;
@@ -152,7 +154,7 @@ namespace Retribution.NPCs.Bosses.Tesca
 
             if (enraged == true && soundAmount == 0)
             {
-                Main.PlaySound(SoundID.DD2_DrakinDeath, (int)npc.position.X, (int)npc.position.Y);
+                Main.PlaySound(SoundLoader.customSoundType, -1, -1, mod.GetSoundSlot(SoundType.Custom, "Sounds/Custom/Tesca_Screech"));
 
                 soundAmount = 1;
             }
@@ -346,12 +348,55 @@ namespace Retribution.NPCs.Bosses.Tesca
             {
                 attachTimer++;
 
-                if (attachTimer >= 480)
+                if (attachTimer >= 480 && attachAmount == 0)
                 {
                     Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, ModContent.ProjectileType<tescanattachspawn>(), 0, 0f, Main.myPlayer, npc.whoAmI, 40);
+                    attachAmount = 1;
                 }
 
-                if (attachTimer >= 530)
+                if (attachTimer >= 490 && attachAmount == 1)
+                {
+                    Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, ModContent.ProjectileType<tescanattachspawn>(), 0, 0f, Main.myPlayer, npc.whoAmI, 40);
+                    attachAmount = 2;
+                }
+
+                if (attachTimer >= 500 && attachAmount == 2)
+                {
+                    Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, ModContent.ProjectileType<tescanattachspawn>(), 0, 0f, Main.myPlayer, npc.whoAmI, 40);
+                    attachAmount = 3;
+                }
+
+                if (attachTimer >= 510 && attachAmount == 3)
+                {
+                    Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, ModContent.ProjectileType<tescanattachspawn>(), 0, 0f, Main.myPlayer, npc.whoAmI, 40);
+                    attachAmount = 4;
+                }
+
+                if (attachTimer >= 520 && attachAmount == 4)
+                {
+                    Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, ModContent.ProjectileType<tescanattachspawn>(), 0, 0f, Main.myPlayer, npc.whoAmI, 40);
+                    attachAmount = 5;
+                }
+
+                if (attachTimer >= 530 && attachAmount == 5)
+                {
+                    Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, ModContent.ProjectileType<tescanattachspawn>(), 0, 0f, Main.myPlayer, npc.whoAmI, 40);
+                    attachAmount = 6;
+                }
+
+                if (attachTimer >= 540 && attachAmount == 6)
+                {
+                    Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, ModContent.ProjectileType<tescanattachspawn>(), 0, 0f, Main.myPlayer, npc.whoAmI, 40);
+                    attachAmount = 7;
+                }
+
+                if (attachTimer >= 550 && attachAmount == 7)
+                {
+                    Projectile.NewProjectile(npc.Center.X, npc.Center.Y, 0, 0, ModContent.ProjectileType<tescanattachspawn>(), 0, 0f, Main.myPlayer, npc.whoAmI, 40);
+                    attachAmount = 0;
+                }
+
+                if (attachTimer >= 550)
                 {
                     attachTimer = 0;
                 }
@@ -445,13 +490,14 @@ namespace Retribution.NPCs.Bosses.Tesca
         public override void NPCLoot()
         {
             Main.NewText("The essence of the Tundra has been released...", 111, 199, 214, true);
+            Main.PlaySound(SoundLoader.customSoundType, -1, -1, mod.GetSoundSlot(SoundType.Custom, "Sounds/Custom/Tesca_Dead"));
 
             Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Tesca1"), 1f);
             Gore.NewGore(npc.position, -npc.velocity, mod.GetGoreSlot("Gores/Tesca0"), 1f);
 
-            if (Main.rand.NextFloat() < .20f)
+            if (Main.expertMode)
             {
-                Item.NewItem(npc.getRect(), ModContent.ItemType<SnowingFrost>(), 1);
+                npc.DropBossBags();
             }
 
             RetributionWorld.downedTesca = true;

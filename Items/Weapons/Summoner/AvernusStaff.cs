@@ -33,7 +33,7 @@ namespace Retribution.Items.Weapons.Summoner
 			item.height = 28;
 			item.useTime = 36;
 			item.useAnimation = 36;
-			item.useStyle = ItemUseStyleID.HoldingOut;
+			item.useStyle = 1;
 			item.value = Item.buyPrice(0, 30, 0, 0);
 			item.rare = ItemRarityID.Cyan;
 			item.UseSound = SoundID.Item44;

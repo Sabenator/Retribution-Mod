@@ -49,14 +49,6 @@ namespace Retribution
 					player.QuickSpawnItem(ModContent.ItemType<reaperemblem>());
 				}
 			}
-
-			if (context == "bossBag" && arg == ItemID.QueenBeeBossBag)
-			{
-				if (Main.rand.NextFloat() < .33f)
-				{
-					player.QuickSpawnItem(ModContent.ItemType<honeyray>());
-				}
-			}
 		}
 	}
 }

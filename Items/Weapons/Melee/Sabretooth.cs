@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace Retribution.Items.Weapons.Melee
 {
-	public class sabretooth : ModItem
+	public class Sabretooth : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

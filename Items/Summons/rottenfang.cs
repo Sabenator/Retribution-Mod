@@ -20,8 +20,8 @@ namespace Retribution.Items.Summons
 
 		public override void SetDefaults()
 		{
-			item.width = 10;
-			item.height = 18;
+			item.width = 32;
+			item.height = 30;
 			item.maxStack = 20;
 			item.rare = ItemRarityID.Cyan;
 			item.useAnimation = 45;

@@ -17,7 +17,7 @@ namespace Retribution.Items.Blocks
             item.maxStack = 999;
             item.value = 100;
             item.rare = 3;
-            item.createTile = mod.TileType("infectedgrass");
+            item.createTile = mod.TileType("DiseasedSoil");
             item.useTurn = true;
             item.autoReuse = true;
             item.useAnimation = 15;

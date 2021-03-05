@@ -52,8 +52,6 @@ namespace Retribution.NPCs.Bosses.Silva
 			Main.PlaySound(SoundID.Item17, (int)base.projectile.position.X, (int)base.projectile.position.Y);
 			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 1, -2, ModContent.ProjectileType<RazorLeaf>(), 10, 0f);
 			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -1, -2, ModContent.ProjectileType<RazorLeaf>(), 10, 0f);
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, -2, ModContent.ProjectileType<RazorLeaf>(), 10, 0f);
-			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0, 2, ModContent.ProjectileType<RazorLeaf>(), 10, 0f);
 			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -1, 2, ModContent.ProjectileType<RazorLeaf>(), 10, 0f);
 			Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 1, 2, ModContent.ProjectileType<RazorLeaf>(), 10, 0f);
 

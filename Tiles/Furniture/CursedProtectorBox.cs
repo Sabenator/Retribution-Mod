@@ -20,7 +20,7 @@ namespace Retribution.Tiles.Furniture
 			TileObjectData.addTile(Type);
 			disableSmartCursor = true;
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Corrupt Protector");
+			name.SetDefault("Music Box");
 			AddMapEntry(new Color(200, 200, 200), name);
 		}
 

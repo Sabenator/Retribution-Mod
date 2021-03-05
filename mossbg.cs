@@ -7,7 +7,7 @@ namespace Retribution.Backgrounds
 	{
 		public override bool ChooseBgStyle()
 		{
-			return !Main.gameMenu && Main.LocalPlayer.GetModPlayer<RetributionPlayer>().ZoneSwamp;
+			return !Main.gameMenu && Main.LocalPlayer.GetModPlayer<RetributionPlayer>().ZoneCystic;
 		}
 
 		// Use this to keep far Backgrounds like the mountains.

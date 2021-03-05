@@ -2,7 +2,8 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Retribution.Buffs;
+using Retribution.Buffs.Summons;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Retribution.Projectiles.Minions
 {
@@ -10,6 +11,7 @@ namespace Retribution.Projectiles.Minions
 	{
 		public override void SetStaticDefaults()
 		{
+			Main.projFrames[projectile.type] = 4;
 			Main.projPet[projectile.type] = true;
 			ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
 			ProjectileID.Sets.Homing[projectile.type] = true;
@@ -35,7 +37,7 @@ namespace Retribution.Projectiles.Minions
 			shootCool = 120f;
 		}
 
-		public override void CheckActive()
+        public override void CheckActive()
 		{
 			Player player = Main.player[projectile.owner];
 			RetributionPlayer modPlayer = player.GetModPlayer<RetributionPlayer>();
@@ -74,5 +76,20 @@ namespace Retribution.Projectiles.Minions
 			}
 			Lighting.AddLight((int)(projectile.Center.X / 16f), (int)(projectile.Center.Y / 16f), 0f, 0f, 1f);
 		}
-    }
+
+		public override void SelectFrame()
+		{
+			int frameSpeed = 6;
+			projectile.frameCounter++;
+			if (projectile.frameCounter >= frameSpeed)
+			{
+				projectile.frameCounter = 0;
+				projectile.frame++;
+				if (projectile.frame >= Main.projFrames[projectile.type])
+				{
+					projectile.frame = 0;
+				}
+			}
+		}
+	}
 }

@@ -50,7 +50,7 @@ namespace Retribution.Items.Weapons.Reaper
 				item.useStyle = ItemUseStyleID.HoldingOut;
 				item.useTime = 20;
 				item.useAnimation = 20;
-				item.damage = 8;
+				item.damage = 5;
 				item.crit = 10;
 				item.noMelee = true;
 				item.melee = false;

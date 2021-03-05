@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 using Terraria.GameContent.Generation;
 using System.Linq;
 using Retribution.Tiles;
-using Retribution.Projectiles;
+using Retribution.Items.Weapons.Ranger;
 
 namespace Retribution
 {
@@ -17,7 +17,28 @@ namespace Retribution
     {
         public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)
         {
+            if (RetributionPlayer.HorusEffect == true && projectile.type != ModContent.ProjectileType<HorusBolt>())
+            {
+				if (Main.rand.NextFloat() < .3f)
+				{
+					Projectile.NewProjectile(target.Center.X + 10, target.Center.Y - 10, 3, -3, ModContent.ProjectileType<HorusBolt>(), 0, 0f, Main.LocalPlayer.whoAmI, 0f, 0f);
+				}
 
+				if (Main.rand.NextFloat() < .3f)
+				{
+					Projectile.NewProjectile(target.Center.X - 10, target.Center.Y - 10, -3, -3, ModContent.ProjectileType<HorusBolt>(), 0, 0f, Main.LocalPlayer.whoAmI, 0f, 0f);
+				}
+
+				if (Main.rand.NextFloat() < .3f)
+				{
+					Projectile.NewProjectile(target.Center.X - 10, target.Center.Y + 10, -3, 3, ModContent.ProjectileType<HorusBolt>(), 0, 0f, Main.LocalPlayer.whoAmI, 0f, 0f);
+				}
+
+				if (Main.rand.NextFloat() < .3f)
+				{
+					Projectile.NewProjectile(target.Center.X + 10, target.Center.Y + 10, 3, 3, ModContent.ProjectileType<HorusBolt>(), 0, 0f, Main.LocalPlayer.whoAmI, 0f, 0f);
+				}
+			}
         }
     }
 }
