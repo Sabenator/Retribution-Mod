@@ -24,26 +24,8 @@ namespace Retribution.NPCs.Bosses.Pharaoh
         public override void SetDefaults()
         {
             npc.aiStyle = -1;
-
-            if (RetributionWorld.nightmareMode == false)
-            {
-                npc.lifeMax = 9050;
-            }
-            if (RetributionWorld.nightmareMode == true)
-            {
-                npc.lifeMax = 11000;
-            }
-
-            if (RetributionWorld.nightmareMode == false)
-            {
-                npc.damage = 50;
-            }
-
-            if (RetributionWorld.nightmareMode == true)
-            {
-                npc.damage = 60;
-            }
-
+            npc.lifeMax = RetributionWorld.nightmareMode ? 7000 : 5000;
+            npc.damage = RetributionWorld.nightmareMode ? 60 : 40;
             npc.defense = 21;
             npc.knockBackResist = 0f;
             npc.width = 52;
@@ -61,104 +43,99 @@ namespace Retribution.NPCs.Bosses.Pharaoh
             music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/inferis");
             bossBag = ModContent.ItemType<Tesca_Bag>();
         }
-
+        //Animation Variables
         private double counting;
-
         public int frameIdle = 0;
-
         private int frame;
 
-        bool enraged = false;
-        bool moving = true;
-        bool canSpike = false;
 
-        private int spikeTimer;
+        //AI Variables
+        private int counter = 0;
+        private int attackCounter = 0;
+        private int attackRand = 0;
+        private Vector2 npcPos;
+        private Vector2 target;
 
+
+
+
+
+        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        {
+            npc.lifeMax += 1000;
+            npc.damage += 20;
+        }
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(ModContent.BuffType<TerrariasFrost>(), 180);
         }
-
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
-        {
-            npc.lifeMax = (int)(npc.lifeMax * 0.625f * bossLifeScale);
-            npc.damage = (int)(npc.damage * 0.6f);
-        }
-
         public override void AI()
         {
-            Player player = Main.player[base.npc.target];
-
-            #region Behaviour
             npc.TargetClosest(true);
-            Vector2 targetPosition = Main.player[npc.target].position;
-
-            if (moving == true)
-            {
-                if (targetPosition.X < npc.position.X)
-                {
-                    npc.velocity.X = -0.8f;
+            Player player = Main.player[npc.target];
+            DespawnHandler();
+            counter++;
+            if (npc.life > npc.lifeMax * (Main.expertMode ? RetributionWorld.nightmareMode ? 0.8f : 0.75f : 0.66f)) {
+                if ((counter % (Main.expertMode ? RetributionWorld.nightmareMode ? 360 : 420 : 480)) == 0) {
+                    attackRand = Main.rand.Next(0, 2);
+                    attackCounter = 0;
                 }
-                if (targetPosition.X > npc.position.X)
+                attackCounter++;
+                if (attackRand == 0)
                 {
-                    npc.velocity.X = 0.8f;
-                }
-                if (targetPosition.Y < npc.position.Y)
-                {
-                    npc.velocity.Y = -0.8f;
-                }
-                if (targetPosition.Y > npc.position.Y)
-                {
-                    npc.velocity.Y = 0.8f;
-                }
-            }
-            else if (moving == false)
-            {
-                npc.velocity.X = 0;
-                npc.velocity.Y = 0;
-            }
-            
-            #endregion
-
-            #region Sand Spike
-            spikeTimer++;
-
-            if (spikeTimer > 498 && Main.rand.NextFloat() < .25f)
-            {
-                canSpike = true;
-            }
-            else if (spikeTimer > 501 && canSpike == false)
-            {
-                spikeTimer = 0;
-            }
-
-            if (canSpike == true)
-            {
-                if (spikeTimer == 500 || spikeTimer == 560 || spikeTimer == 620 || spikeTimer == 680 || spikeTimer == 740)
-                {
-                    moving = false;
-
-                    Projectile.NewProjectile(player.Center.X, player.Center.Y + 650f, 0f, 0f, ModContent.ProjectileType<SandSpikeWarn>(), 0, 0f, Main.myPlayer, 0f, 0f);
-
-                    int choice = Main.rand.Next(0, 1);
-                    if (choice == 0)
+                    if (attackCounter < (Main.expertMode ? RetributionWorld.nightmareMode ? 120 : 180 : 240))
                     {
-                        Main.PlaySound(29, npc.Center, 61);
+                        AIMethods.MoveToward(npc, new Vector2(player.Center.X - (Main.screenWidth / 3), player.Center.Y), (Main.expertMode ? RetributionWorld.nightmareMode ? 15f : 12f : 9f), 20f);
                     }
-                    else if (choice == 1)
+                    else if (attackCounter < (Main.expertMode ? RetributionWorld.nightmareMode ? 160 : 240 : 330))
                     {
-                        Main.PlaySound(29, npc.Center, 62);
+                        if (attackCounter == (Main.expertMode ? RetributionWorld.nightmareMode ? 120 : 180 : 240))
+                        {
+                            Main.PlaySound(SoundID.DD2_DarkMageCastHeal, npc.Center);
+                            npcPos = npc.Center;
+                            target = player.Center;
+                        }
+                        AIMethods.DashToward(npcPos, target, (2 * (Main.screenWidth / 3)) / (Main.expertMode ? RetributionWorld.nightmareMode ? 40 : 60 : 90), npc);
+                    }
+                    else
+                    {
+                        if (attackCounter == 359 || attackCounter == 419 || attackCounter == 479)
+                        {
+                            ring(npc, Main.rand.Next(0, 180));
+                        }
+                        AIMethods.MoveToward(npc, new Vector2(player.Center.X, player.Center.Y - (Main.screenHeight / 3)), (Main.expertMode ? RetributionWorld.nightmareMode ? 15f : 12f : 9f), 20f);
                     }
                 }
-
-                if (spikeTimer > 740)
+                else if (attackRand == 1)
                 {
-                    spikeTimer = 0;
-                    canSpike = false;
-                    moving = true;
+                    if (attackCounter < (Main.expertMode ? RetributionWorld.nightmareMode ? 120 : 180 : 240))
+                    {
+                        AIMethods.MoveToward(npc, new Vector2(player.Center.X + (Main.screenWidth / 3), player.Center.Y), (Main.expertMode ? RetributionWorld.nightmareMode ? 15f : 12f : 9f), 20f);
+                    }
+                    else if (attackCounter < (Main.expertMode ? RetributionWorld.nightmareMode ? 160 : 240 : 330))
+                    {
+                        if (attackCounter == (Main.expertMode ? RetributionWorld.nightmareMode ? 120 : 180 : 240))
+                        {
+                            Main.PlaySound(SoundID.DD2_DarkMageCastHeal, npc.Center);
+                            npcPos = npc.Center;
+                            target = player.Center;
+                        }
+                        AIMethods.DashToward(npcPos, target, (2 * (Main.screenWidth / 3)) / (Main.expertMode ? RetributionWorld.nightmareMode ? 40 : 60 : 90), npc);
+                    }
+                    else
+                    {
+                        if (attackCounter == 359 || attackCounter == 419 || attackCounter == 479) {
+                            ring(npc, Main.rand.Next(0, 180));
+                        }
+                        AIMethods.MoveToward(npc, new Vector2(player.Center.X, player.Center.Y - (Main.screenHeight / 3)), (Main.expertMode ? RetributionWorld.nightmareMode ? 15f : 12f : 9f), 20f);
+                    }
                 }
             }
-            #endregion
+        }
+        public void ring(NPC npc, int rot) {
+            Main.PlaySound(SoundID.DD2_DarkMageAttack, npc.Center);
+            AIMethods.ShootRing(8, ModContent.ProjectileType<SandSpikeWarn>(), Main.expertMode ? RetributionWorld.nightmareMode ? 18 : 15 : 12, 2f, Main.expertMode ? RetributionWorld.nightmareMode ? 90 : 70 : 50, npc.Center, rot);
+            npc.netUpdate = true;
         }
 
         public override void FindFrame(int frameHeight)
@@ -167,6 +144,7 @@ namespace Retribution.NPCs.Bosses.Pharaoh
             if (counting < 5.0)
             {
                 npc.frame.Y = 0;
+
             }
             else if (counting < 10.0)
             {
@@ -204,7 +182,7 @@ namespace Retribution.NPCs.Bosses.Pharaoh
 
         public override void NPCLoot()
         {
-            Main.NewText("The essence of the Tundra has been released...", 111, 199, 214, true);
+            Main.NewText("The essence of the Desert has been released...", 111, 199, 214, true);
 
             Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/Tesca1"), 1f);
             Gore.NewGore(npc.position, -npc.velocity, mod.GetGoreSlot("Gores/Tesca0"), 1f);
@@ -220,6 +198,21 @@ namespace Retribution.NPCs.Bosses.Pharaoh
             if (Main.netMode == NetmodeID.Server)
             {
                 NetMessage.SendData(MessageID.WorldData);
+            }
+        }
+        private void DespawnHandler()
+        {
+            Player player = Main.player[npc.target];
+            if (!player.active || player.dead)
+            {
+                npc.velocity *= 0.96f;
+                npc.velocity.Y -= 1;
+                if (npc.timeLeft > 10)
+                {
+                    npc.timeLeft = 10;
+                }
+                npc.netUpdate = true;
+                return;
             }
         }
     }

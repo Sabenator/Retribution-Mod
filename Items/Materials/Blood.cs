@@ -20,4 +20,4 @@ namespace Retribution.Items.Materials
 			item.maxStack = 999;
 		}
 	}
-{}
+}

@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "zCauG04mkNrI7vM54/JaLndb20adh8VMVgpDqMLrFwx58etsBihus31aFwi/A8A7/tKgyIugyVGT+LONXm+UHA==",
+  "dgSpecHash": "0lSgiq/QlIdO2UfU/ZGuAPHQuvKr9b72c/FZbN2K9zZbhoHr9WjHwbycXtxVIF1cUmSfpp3Z5ik10HQNdn4c6A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Christian Hathaway\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\Retribution\\Retribution.csproj",
+  "projectFilePath": "C:\\Users\\Saben Young\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\Retribution\\Retribution.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Christian Hathaway\\.nuget\\packages\\tmodloader.codeassist\\0.1.1\\tmodloader.codeassist.0.1.1.nupkg.sha512"
+    "C:\\Users\\Saben Young\\.nuget\\packages\\tmodloader.codeassist\\0.1.1\\tmodloader.codeassist.0.1.1.nupkg.sha512"
   ],
   "logs": []
 }

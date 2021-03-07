@@ -11,7 +11,7 @@ using Retribution.Projectiles;
 
 namespace Retribution.Items.Weapons.Reaper
 {
-	public class arcticspire : ReaperClass
+	public class ArcticSpire : ReaperClass
 	{
 		public override void SetStaticDefaults()
 		{

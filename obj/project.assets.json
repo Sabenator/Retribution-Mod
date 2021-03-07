@@ -31,19 +31,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Christian Hathaway\\.nuget\\packages\\": {}
+    "C:\\Users\\Saben Young\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Christian Hathaway\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\Retribution\\Retribution.csproj",
+      "projectUniqueName": "C:\\Users\\Saben Young\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\Retribution\\Retribution.csproj",
       "projectName": "Retribution",
-      "projectPath": "C:\\Users\\Christian Hathaway\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\Retribution\\Retribution.csproj",
-      "packagesPath": "C:\\Users\\Christian Hathaway\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Christian Hathaway\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\Retribution\\obj\\",
+      "projectPath": "C:\\Users\\Saben Young\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\Retribution\\Retribution.csproj",
+      "packagesPath": "C:\\Users\\Saben Young\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Saben Young\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\Retribution\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Christian Hathaway\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Saben Young\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -74,7 +74,7 @@
             "version": "[0.1.*, )"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

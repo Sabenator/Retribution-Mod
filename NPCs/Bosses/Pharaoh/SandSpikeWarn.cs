@@ -44,7 +44,7 @@ namespace Retribution.NPCs.Bosses.Pharaoh
 			{
 				if (projectile.ai[0] == 22f)
 				{
-					int i = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, -30f, ModContent.ProjectileType<SandSpike>(), 55, 0f, Main.myPlayer, 0f, 40f);
+					int i = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, projectile.velocity.X, projectile.velocity.Y, ModContent.ProjectileType<SandSpike>(), 55, 0f, Main.myPlayer, 0f, 40f);
 					Main.projectile[i].localAI[1] = 125f;
 					Main.projectile[i].Center = projectile.Center;
 					return;

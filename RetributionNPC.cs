@@ -49,61 +49,19 @@ namespace Retribution
 				retributionPlayer.addSoul = true;
 			}
 		}
-
         public override void SetDefaults(NPC npc)
         {
 			#region Nightmare Mode Defaults
 			if (RetributionWorld.nightmareMode == true)
 			{
-				if (npc.boss != true)
+				if (npc.boss = false)
 				{
-					npc.damage = (npc.damage * 4) / 3;
-					npc.lifeMax = (npc.lifeMax * 4) / 3;
-				}
-
-				if (npc.type == NPCID.KingSlime)
-				{
-					npc.lifeMax = 2800;
-					npc.damage = 68;
+					npc.damage = (int)(npc.damage * 1.5f);
+					npc.lifeMax = (int)(npc.lifeMax * 1.35f);
 				}
 			}
             #endregion
-        }
-
-		#region Nightmare Mode Sets
-		private int kingShootTimer;
-
-        #endregion
-
-        public override void AI(NPC npc)
-        {
-			#region Nightmare AI
-			if (RetributionWorld.nightmareMode == true)
-			{
-				#region King Slime
-				kingShootTimer++;
-
-				if (npc.type == NPCID.KingSlime)
-				{
-					if (kingShootTimer > 180)
-					{
-						Main.PlaySound(SoundID.Item17, (int)npc.position.X, (int)npc.position.Y);
-						npc.TargetClosest(true);
-						Vector2 vector = Main.player[npc.target].Center + new Vector2(npc.Center.X, npc.Center.Y);
-						Vector2 vector2 = npc.Center + new Vector2(npc.Center.X, npc.Center.Y);
-						npc.netUpdate = true;
-
-						Main.PlaySound(2, (int)npc.position.X, (int)npc.position.Y, 45, 1f, 0f);
-						float num = (float)Math.Atan2((double)(vector2.Y - vector.Y), (double)(vector2.X - vector.X));
-						int i = Projectile.NewProjectile(npc.Center.X, npc.Center.Y, (float)(Math.Cos((double)num) * 10.0 * -1.0), (float)(Math.Sin((double)num) * 10.0 * -1.0), ModContent.ProjectileType<SlimeBolt>(), 8, 0f, 0, 0f, 0f);
-						kingShootTimer = 0;
-					}
-				}
-				#endregion
-			}
-			#endregion
-		}
-
+        } 
 		int soulTimer;
 
         public override void NPCLoot(NPC npc)

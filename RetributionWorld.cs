@@ -189,7 +189,7 @@ namespace Retribution
             int x = Main.maxTilesX / 2 + Main.rand.Next(-50, 50);
             int y = WorldGen.genRand.Next((int)WorldGen.rockLayerHigh, (int)WorldGen.rockLayerHigh + 10);
 
-            StructureHelper.StructureHelper.GenerateStructure("Structures/Burial", new Point16(x, y), Retribution.instance);
+            //StructureHelper.StructureHelper.GenerateStructure("Structures/Burial", new Point16(x, y), Retribution.instance);
         }
 
         private void Rubidium(GenerationProgress progress)
