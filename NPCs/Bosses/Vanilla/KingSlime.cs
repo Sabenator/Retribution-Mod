@@ -17,7 +17,7 @@ namespace Retribution.NPCs.Bosses.Vanilla
 			{
 				if (npc.type == NPCID.KingSlime)
 				{
-					//random number that is approximately 3900 life
+					//random number that is approximately 3990 life
 					npc.lifeMax = (int)(npc.lifeMax * 1.4f);
 					//in vanilla, expert scaling is * 1.8 damage
 					npc.damage = 60;

@@ -250,7 +250,7 @@ namespace Retribution
             }
         }
         //Shoots in a ring, with rotation, in DEGREES
-        public static void ShootRing(int count, int type, float velocity, float kb, int damage, Vector2 pos, int initRotationDeg)
+        public static void ShootRing(int count, int type, float velocity, float kb, int damage, Vector2 pos, float initRotationDeg)
         {
             for (int i = 0; i < count; i++)
             {
@@ -258,7 +258,7 @@ namespace Retribution
             }
         }
         //Shoots in a ring, with rotation, in DEGREES, And allows you to pass in ai[]
-        public static void ShootRing(int count, int type, float velocity, float kb, int damage, Vector2 pos, int initRotationDeg, float ai0, float ai1)
+        public static void ShootRing(int count, int type, float velocity, float kb, int damage, Vector2 pos, float initRotationDeg, float ai0, float ai1)
         {
             for (int i = 0; i < count; i++)
             {
@@ -344,6 +344,10 @@ namespace Retribution
 
         }
         //ai[] passed in
+        /// <summary>
+        /// Shoots projectiles from any cardinal direction
+        /// </summary>
+        /// <param name="direction">0 = Above, 1 = Below, 2 = Left, 3 = Right</param>
         public static void Rain(int count, int type, float velocity, float kb, int damage, Vector2 playerPos, int direction, float ai0, float ai1) {
             if (direction == 0)
             {
@@ -382,7 +386,7 @@ namespace Retribution
             }
 
         }
-        //shoots out a fan, may or may not work properly... use at your own risk
+        //shoots out a fan
 
         public static void ShootFan(int count, int type, float velocity, float kb, int damage, Vector2 target, float anglescope, Vector2 pos, float ai0, float ai1) {
             Vector2 primaryProj = new Vector2(velocity, 0).RotatedBy((target - pos).ToRotation() - MathHelper.ToRadians(anglescope / 2));

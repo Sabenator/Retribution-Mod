@@ -35,7 +35,7 @@ namespace Retribution.NPCs.Bosses.Pharaoh
 
 		public override void AI()
 		{
-			projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
+			projectile.rotation = projectile.velocity.ToRotation() + (float)(Math.PI / 2);
 		}
 	}
 }
