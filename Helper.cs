@@ -406,5 +406,15 @@ namespace Retribution
             }
 
         }
+        public static void ShootRingIn(int count, int type, float velocity, float kb, int damage, Vector2 pos, float distance) {
+            Vector2 startPos = new Vector2(pos.X + distance, pos.Y);
+            Vector2 v = new Vector2(1, 0);
+            float rot = 360 / count;
+            for (int i = 0; i < count; i++) {
+                startPos = startPos.RotatedBy(MathHelper.ToRadians(rot), pos);
+                v = v.RotatedBy(MathHelper.ToRadians(rot));
+                Projectile.NewProjectile(startPos, -(v * velocity), type, damage, kb);
+            }
+        }
     }
 }

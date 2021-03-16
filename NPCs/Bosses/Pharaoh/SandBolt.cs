@@ -12,19 +12,21 @@ namespace Retribution.NPCs.Bosses.Pharaoh
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Sand Bolt");
+			ProjectileID.Sets.TrailCacheLength[projectile.type] = 10;
+			ProjectileID.Sets.TrailingMode[projectile.type] = ProjectileID.Bullet;
 		}
 
 		public override void SetDefaults()
 		{
 			projectile.width = 10;
-			projectile.height = 32;
-			projectile.scale = 1f;
+			projectile.height = 10;
+			projectile.scale = 1.25f;
 			projectile.penetrate = 5;
 			projectile.hostile = true;
 			projectile.friendly = false;
 			projectile.tileCollide = false;
 			projectile.ignoreWater = true;
-			projectile.alpha = 0;
+			projectile.alpha =25;
 			projectile.timeLeft = 300;
 		}
 		public int counter = 0;
@@ -36,7 +38,7 @@ namespace Retribution.NPCs.Bosses.Pharaoh
 			Player player = Main.player[Main.myPlayer];
 			if (projectile.ai[1] == 0)
 			{
-				projectile.rotation = projectile.velocity.ToRotation() + (float)(Math.PI / 2);
+				projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(135);
 			}
 			if (projectile.ai[1] == 1 && counter < 90) {
 				projectile.rotation = projectile.velocity.ToRotation() + (float)(Math.PI / 2);

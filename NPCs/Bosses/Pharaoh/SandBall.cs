@@ -12,13 +12,15 @@ namespace Retribution.NPCs.Bosses.Pharaoh
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Sand Ball");
+			ProjectileID.Sets.TrailCacheLength[projectile.type] = 7;
+			ProjectileID.Sets.TrailingMode[projectile.type] = 1;
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.width = 8;
-			projectile.height = 8;
-			projectile.scale = 1f;
+			projectile.width = 16;
+			projectile.height = 16;
+			projectile.scale = 2f;
 			projectile.penetrate = 5;
 			projectile.hostile = true;
 			projectile.friendly = false;
@@ -33,10 +35,7 @@ namespace Retribution.NPCs.Bosses.Pharaoh
 		public override void AI()
 		{
 			counter++;
-			projectile.rotation = projectile.rotation + MathHelper.ToRadians(counter * 3);
-			if (projectile.ai[1] == 1) {
-				projectile.velocity = projectile.velocity.RotatedBy(MathHelper.ToRadians(1.5f));
-			}
+			projectile.rotation = projectile.velocity.ToRotation();
 		}
 		public override void Kill(int timeLeft)
 		{
